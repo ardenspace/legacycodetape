@@ -1,14 +1,1 @@
-[
-  {
-    "id": "retro-sf-visor",
-    "file": "local/retro-sf-visor.png",
-    "source": "User-provided visual reference, 2026-10-08",
-    "notes": "Close-up of a person wearing a bulky worn visor; deep blue industrial background, violet metal, warm cel-shaded skin, dark glass reflections. Reference for material, palette and drawn texture, not a character to reproduce."
-  },
-  {
-    "id": "retro-sf-workstation",
-    "file": "local/retro-sf-workstation.png",
-    "source": "User-provided visual reference, 2026-10-08",
-    "notes": "Person with mechanical arms surrounded by bulky cyan CRTs, red numeric readouts, physical knobs and loose cables. Dense worn machinery and a quiet pause during technical work. Reference for atmosphere and equipment detail, not a fixed layout."
-  }
-]
+[]

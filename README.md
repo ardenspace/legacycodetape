@@ -1,55 +1,51 @@
 # Legacy Code Tape
 
-개발자들의 플레이리스트 채널을 위한 작은 제작 작업실. 소프트웨어·전자·기계 등 무언가를 만드는 사람들을 아우른다.
-
-첫 방향은 **80~90년대 SF 셀 애니메이션 이미지 + 로파이 음악**이다. 제목은 음악과 분위기를 직접 설명하고, 세계관은 필요할 때 설명란에 담는다. 화면 레이아웃은 아직 정하지 않았다.
+소프트웨어·전자·기계 등 무언가를 만드는 사람들을 위한 플레이리스트 제작 프로젝트.
+음악은 Suno에서 제작한다. 시각 방향은 새 요청부터 정한다.
 
 ## 현재 가능한 것
 
-기존 로컬 Gemma에 스타일 지침, 레퍼런스 설명, 장면 요청을 전달해 영문 이미지 프롬프트 후보를 생성한다. 요청과 응답을 함께 저장해 마음에 든 결과를 다시 확인할 수 있다.
-
-Python 3만 필요하며 패키지 설치는 없다. 이미 실행 중인 로컬 LLM 서버를 사용한다.
+Python 표준 라이브러리로 구현한 `scripts/prompt.py`가 기존 로컬 Gemma에 설명을 전달하고 이미지 또는 상황별 Suno 음악 프롬프트 후보를 저장한다.
 
 ```sh
-cd /Users/arden/code/legacycodetape
-
-# 서버를 호출하지 않고 실제로 전달할 내용을 확인
-python3 scripts/prompt.py --brief-file examples/first-scene.txt --dry-run
-
-# 서로 다른 구도의 후보 3개 생성
-python3 scripts/prompt.py --brief-file examples/first-scene.txt
-
-# 직접 장면 지정
-python3 scripts/prompt.py --brief '비 오는 밤, CRT 옆에서 회로를 수리하는 개발자의 작업실' --count 1
+python3 scripts/prompt.py --help
+python3 scripts/prompt.py --brief '<새 장면 설명>' --dry-run
+python3 scripts/prompt.py --brief '<새 장면 설명>' --count 1
 ```
 
-기본 주소는 `http://127.0.0.1:8080/v1`. `/models`에서 현재 모델 이름을 확인한다. 필요하면 `GEMMA_BASE_URL`과 `GEMMA_MODEL` 환경 변수로 지정한다. 여러 프로젝트가 공유하는 서비스라 응답이 느릴 수 있으며 기본 제한 시간은 600초다. 이 도구는 서버를 시작하거나 종료하지 않는다.
+## 상황별 Suno 프롬프트
 
-각 실행은 `runs/<UTC시각>-<식별자>/`에 저장된다.
+음악 요청은 `--mode music`으로 실행한다. 한국어 상황 이름·설명과 Suno에 복사할 영어 프롬프트를 출력한다. 장르를 고정하지 않으며 `--genre`를 생략하면 요청에 맞게 제안한다. 기본은 보컬 없는 음악이고, 보컬이 필요하면 `--vocals vocals` 또는 요청문으로 지정한다. 가사는 `--lyrics`로 요청할 때만 생성하며 음원은 생성하지 않는다.
 
-- `request.json`: 실제 전달한 스타일·참조 설명·장면 요청과 생성 설정
-- `response.json`: 모델 원본 응답
-- `candidates.json`: 후보 이름, 이미지 프롬프트, 애니메이션 제안, 참조 ID
-- `prompt-01.txt` 등: 이미지 생성 시 복사할 영문 프롬프트
+```sh
+python3 scripts/prompt.py --mode music --genre 'jazzhop' --brief '작은 버그를 해결하고 흐름을 타는 개발자의 오후' --count 2
+python3 scripts/prompt.py --mode music --genre 'drum and bass' --brief '해커톤 마지막 두 시간, 빠르고 추진력 있는 작업 음악' --count 3
+python3 scripts/prompt.py --mode music --brief '퇴근 후 개인 프로젝트, 서로 다른 장르로 제안' --count 6 --dry-run
+```
 
-오류가 나면 자동 재시도하지 않는다. 응답이 도착했다면 원본을 저장하므로 원인을 확인한 뒤 다시 실행할 수 있다.
+후보 수는 1~6개다. 각 후보는 상황에 맞춰 템포·악기·리듬·질감·에너지·전개를 제안한다. 음악 모드는 이미지 스타일 설정과 참조 목록을 읽지 않는다. 이전 실행도 자동으로 읽지 않으므로 변주할 기존 프롬프트는 `--brief`나 `--brief-file`에 직접 포함한다.
 
-## 자산과 역할
+실행별 `runs/` 폴더에 `request.json`, `response.json`, `candidates.json`, 복사용 `prompt-01.txt` 등을 저장한다. 모델 출력 형식이 잘못되면 저장된 원본 응답으로 확인할 수 있다.
 
-| 위치 | 역할 |
-|---|---|
-| `config/style.json` | 색감·질감·장비·합성 편의 등 공통 지침 |
-| `references/catalog.json` | 레퍼런스에서 참고할 특징 |
-| `references/local/` | 사용자가 제공한 이미지 원본, Git 제외 |
-| `examples/first-scene.txt` | 첫 장면 요청 예시 |
-| `runs/` | 실행 결과, Git 제외 |
+### 필요할 때 가사 함께 만들기
 
-현재 Gemma에는 **이미지의 설명만 전달**한다. 로컬 이미지 파일이 자동 첨부되거나 과거 실행 결과가 자동 학습·검색되는 구조는 아니다. 이미지 생성 시 선택한 레퍼런스는 별도로 첨부한다. 채택한 결과의 특징은 스타일 지침이나 참조 목록에 직접 반영할 수 있다.
+`--lyrics`를 붙이면 자동으로 보컬 곡을 요청하고, 영어 스타일 프롬프트와 창작 가사를 별도로 출력한다. `--lyrics-language`로 가사 언어를 지정할 수 있다. 생략하면 요청문에 명시된 언어를 따르고, 언어가 없으면 한국어를 사용한다. 장르만으로 가사 언어를 고정하지 않는다.
 
-## 다음 제작 단계
+```sh
+python3 scripts/prompt.py --mode music --genre J-pop --lyrics --lyrics-language Japanese --brief '퇴근길, 내일을 기대하는 밝은 노래' --count 1
+python3 scripts/prompt.py --mode music --genre pop --lyrics --lyrics-language English --brief '멀어진 친구에게 먼저 연락하는 용기, 짧은 벌스와 기억에 남는 후렴' --count 2
+```
 
-단계별 할 일, 완료 기준, 미정 사항, 다음 세션 시작점은 [다음 단계 문서](docs/NEXT_STEPS.md)에 정리했다.
+스타일은 `prompt-01.txt`, 가사는 `lyrics-01.txt`처럼 같은 번호로 저장된다. 가사에는 `[Verse 1]`, `[Chorus]` 등의 구분과 줄바꿈을 포함하도록 요청한다. 길이·구성·주제는 요청문에 적는다. `--vocals vocals`만 사용하면 보컬 방향만 제안하고 가사는 쓰지 않는다. `--lyrics`와 `--vocals instrumental`은 함께 사용할 수 없다.
 
-프롬프트 선택 → 이미지 생성 → Suno 음악과 조합 → 웹에서 CRT 파형·표시등 같은 미세 움직임 합성 → 영상 출력.
+서비스 없이 검사: `python3 -m unittest discover -s tests -v`. 실제 Gemma 호출은 별도 수동 확인이다.
 
-현재는 프롬프트 도구까지만 연결되어 있다. 이미지 생성 자동 호출, Suno 연결, 웹 편집기와 영상 출력은 이후 실제 샘플을 보며 구현한다. 원본 이미지 위에 투명 레이어를 겹치는 방향이며 인물 애니메이션은 필수가 아니다.
+기본 주소는 `http://127.0.0.1:8080/v1`이다. `GEMMA_BASE_URL`과 `GEMMA_MODEL` 환경 변수로 변경할 수 있다. 도구는 서버를 시작하거나 종료하지 않는다.
+
+- `config/style.json`: 현재 비어 있는 선택적 스타일 문맥.
+- `references/catalog.json`: 현재 비어 있는 참조 설명 목록. 로컬 이미지 픽셀은 자동 전달하지 않는다.
+- `references/local/`: 로컬 참조 이미지 파일, Git 제외.
+- `runs/`: 실행별 요청·원본 응답·후보·프롬프트와 이미지 파일, Git 제외.
+
+이미지 생성 API, Suno API, 웹 편집기, 영상 출력은 프로젝트에 연결되어 있지 않다.
+현재 상태와 다음 단계는 [작업 인계](docs/NEXT_STEPS.md)를 참고한다.

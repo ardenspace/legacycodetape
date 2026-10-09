@@ -1,10 +1,1 @@
-{
-  "channel": "Legacy Code Tape",
-  "visual_direction": "1980s–1990s hand-drawn science-fiction anime atmosphere, cel shading, detailed painted machinery, worn industrial surfaces and subtle grain",
-  "palette": "deep navy and near-black shadows, muted violet, cyan CRT light, sparse red instrument LEDs; restrained warm skin tones where a person is present",
-  "subjects": "people making, maintaining or investigating software, electronics and mechanical systems",
-  "composition": "Explore compositions freely; no fixed character position or channel layout. Default to a 16:9 image suitable for a long listening video.",
-  "animation_readiness": "If equipment screens are present, keep at least one visible screen surface largely unobstructed for later web compositing. Suggest subtle screen or indicator effects; do not require character animation.",
-  "avoid": ["glossy 3D-render aesthetic", "overwhelming neon", "large typography or logos", "mandatory lore or fictional tape labels", "copying a reference character or exact composition"],
-  "editorial": "Titles should directly describe music and atmosphere. Optional worldbuilding belongs in the description. Do not invent a fixed protagonist or episode naming scheme."
-}
+{}
