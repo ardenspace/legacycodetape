@@ -7,6 +7,8 @@
 시대와 세계를 자유롭게 여행하며, 도착한 세계의 소리를 우리 일상의 배경음악으로 담는다. 채널 소개 원문은 `README.md`에 기록했다. 주인공 Eunoh는 여러 시대와 세계에 등장한다.
 
 ## 현재 상태
+- [x] 은오 옆모습 기준 2장을 사용자가 지정(2026-10-13): 화면 왼쪽을 보는 `runs/euno/reference/eunoh_profile_facing_left_20261013.png`(원본 `drafts/2026-10-13_profile/profile_left_v2.png`, 눈썹 피어싱·눈 아래 점·링과 작은 귀걸이 2개), 화면 오른쪽을 보는 `runs/euno/reference/eunoh_profile_facing_right_20261013.png`(원본 `profile_right_v2.png`, 표시 없음·링 하나).
+- [x] 옆모습 시험작 `profile_left_v1.png`(내장 image_gen 1회, 1672×941에서 Lanczos 1회 확대)와 그 좌우 반전본 제작. 처음에는 보이는 쪽을 거꾸로 판단해서 left_v1에 표시를 빼고, right_v1에 표시를 잘못 넣었다. 수정본은 left_v2(left_v1에 표시만 국소 합성)와 right_v2(반전본 그대로). 방향 규칙은 `AGENTS.md`에 기록. left_v1에서 정수리 머리끝이 화면 위에서 살짝 잘린다.
 - [x] 원본 `direction1_front_v1.png`에서 1회 생성 후 원본을 86.1244% Lanczos 축소 합성한 `runs/euno/drafts/style_2026-10-13/front_16x9_v6.png` 제작 (1920×1080). v5는 어깨·구도 좌표만 참고. 얼굴·기존 머리카락·목·칼라 원본 복원, 화면 오른쪽 점·두 구슬 피어싱 확인. 원본에 없는 정수리 확장부와 26px 연결부는 생성 픽셀이므로 머리카락 전체 원본 보존 조건에는 예외가 있음. 프롬프트·처리 기록·재현 스크립트 저장, 사용자 검토 대기.
 - [x] 사용자 요청에 따라 내장 image_gen으로 여성 체형의 좁고 둥근 어깨 수정본 `runs/euno/drafts/style_2026-10-13/front_16x9_v4.png` 제작 (1920×1080). 생성 결과 크기 조정 후 원본 얼굴·머리카락 픽셀을 유지해 합성. 정확한 프롬프트와 처리 방식은 같은 이름의 `_prompt.txt`, `_processing.txt`에 기록. v1/v2/v3 유지, 사용자 검토 대기.
 - [x] `front_16x9_v1.png`의 양쪽 어깨 수직 잘림 수정: `runs/euno/drafts/style_2026-10-13/front_16x9_v3.png` (1920×1080). 내장 이미지 편집 결과의 어깨를 원본에 합성해 얼굴·머리카락 원본 픽셀 보존. 정확한 프롬프트와 크기 조정·합성 방식은 같은 이름의 `_prompt.txt`, `_processing.txt`에 기록. 화면 오른쪽 눈썹 두 구슬 피어싱·눈 아래 점 확인.

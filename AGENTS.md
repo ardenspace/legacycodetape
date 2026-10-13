@@ -17,6 +17,8 @@ A playlist channel that travels across eras and imagined worlds, bringing the so
 - Eunoh는 여성이다 (2026-10-13 사용자 확인). 체형·어깨 등 몸은 여성 비율로 그린다. 이 사실을 이유로 확정된 얼굴을 바꾸지 않는다.
 - 좌우는 화면을 보는 사람 기준으로 명시한다. 화면 기준 오른쪽 눈썹에 피어싱, 오른쪽 눈 아래에 점 하나가 있다 (인물 기준 왼쪽).
 - 화면 기준 왼쪽 눈 아래에 점을 넣거나 왼쪽 눈썹에 피어싱을 복제하지 않는다. 반측면·측면에서도 인물의 해부학적 위치를 유지하고, 해당 부위가 가려지면 반대편으로 옮겨 그리지 않는다.
+- 사용자 확정 옆모습 참고 (2026-10-13): `runs/euno/reference/eunoh_profile_facing_left_20261013.png`(화면 왼쪽을 봄, 표시 보임), `runs/euno/reference/eunoh_profile_facing_right_20261013.png`(화면 오른쪽을 봄, 표시 없음). 옆모습을 그릴 때 같은 방향의 참고를 첨부한다.
+- 옆모습에서 보이는 쪽 (2026-10-13 사용자 확인): 얼굴이 화면 오른쪽을 향하면 인물의 오른쪽 얼굴이 보이므로 점·눈썹 피어싱이 없고, 보이는 귀에는 링 하나만 있다. 얼굴이 화면 왼쪽을 향하면 인물의 왼쪽 얼굴이 보이므로 눈썹 피어싱(구슬 두 개)과 눈 아래 점이 보이고, 보이는 귀에는 링과 작은 귀걸이 두 개가 있다.
 - Eunoh 이미지 생성·수정 프롬프트에 이 특징과 좌우 기준을 명시하고, 결과에서 위치를 확인한다. 이전 작업 기록과 충돌하면 이 사용자 확정 규칙을 우선한다.
 - These are user-defined character identity facts, not inferred visual preferences; they persist across worlds.
 
