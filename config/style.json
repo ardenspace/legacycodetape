@@ -1,1 +1,9 @@
-{}
+{
+  "channel_standard": "User-confirmed channel image standard (2026-10-13). The character may change; these rules stay.",
+  "line_art": "Thin, delicate fine-ink line art: hairline strokes, precise eyes, sparse halftone shading. No thick outlines, no heavy cel shading, no saturated flat fills.",
+  "color": "Soft, subtle, low-intensity watercolor/marker wash on the figure only: gentle skin warmth, faint blush on cheeks and lips. Hair stays mostly black ink.",
+  "framing": "Straight front view, looking at the viewer, shoulders level. Head and shoulders only: broad relaxed shoulders slope gently outward and exit the bottom edge of the frame near 10% and 90% of its width, before rounding into the arms. No upper arms visible; only a thin band of clothing below the neckline.",
+  "background": "Plain pure white.",
+  "aspect_ratio": "16:9 landscape (video frame, e.g. 1920x1080).",
+  "variable_per_world": "Clothing, accessories and props carry each world's theme."
+}
