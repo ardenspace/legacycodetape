@@ -13,16 +13,17 @@ A playlist channel that travels across eras and imagined worlds, bringing the so
 - Build incrementally. No full automation platform, upload pipeline, new backend or asset database yet.
 
 ## Eunoh identity — explicit user rules
-- 사용자 확정 얼굴 참고: `runs/euno/reference/eunoh_base2.jpg` (2026-10-12, “우리 은오는 이렇게 생겼어”). Eunoh 제작 시 이 이미지를 얼굴 정체성 참고로 명시적으로 사용한다. 의상·배경은 고정하지 않는다.
+- 사용자 확정 얼굴 참고: `runs/euno/reference/mono/eunoh_base2.jpg` (2026-10-12, “우리 은오는 이렇게 생겼어”). Eunoh 제작 시 이 이미지를 얼굴 정체성 참고로 명시적으로 사용한다. 의상·배경은 고정하지 않는다.
 - Eunoh는 여성이다 (2026-10-13 사용자 확인). 체형·어깨 등 몸은 여성 비율로 그린다. 이 사실을 이유로 확정된 얼굴을 바꾸지 않는다.
 - 좌우는 화면을 보는 사람 기준으로 명시한다. 화면 기준 오른쪽 눈썹에 피어싱, 오른쪽 눈 아래에 점 하나가 있다 (인물 기준 왼쪽).
 - 화면 기준 왼쪽 눈 아래에 점을 넣거나 왼쪽 눈썹에 피어싱을 복제하지 않는다. 반측면·측면에서도 인물의 해부학적 위치를 유지하고, 해당 부위가 가려지면 반대편으로 옮겨 그리지 않는다.
-- 사용자 확정 옆모습 참고 (2026-10-13): `runs/euno/reference/eunoh_profile_facing_left_20261013.png`(화면 왼쪽을 봄, 표시 보임), `runs/euno/reference/eunoh_profile_facing_right_20261013.png`(화면 오른쪽을 봄, 표시 없음). 옆모습을 그릴 때 같은 방향의 참고를 첨부한다.
+- 사용자 확정 옆모습 참고 (2026-10-13): `runs/euno/reference/face/profile_left_v2.png`(화면 왼쪽을 봄, 표시 보임), `runs/euno/reference/face/profile_right_v2.png`(화면 오른쪽을 봄, 표시 없음). 옆모습을 그릴 때 같은 방향의 참고를 첨부한다.
 - 옆모습에서 보이는 쪽 (2026-10-13 사용자 확인): 얼굴이 화면 오른쪽을 향하면 인물의 오른쪽 얼굴이 보이므로 점·눈썹 피어싱이 없고, 보이는 귀에는 링 하나만 있다. 얼굴이 화면 왼쪽을 향하면 인물의 왼쪽 얼굴이 보이므로 눈썹 피어싱(구슬 두 개)과 눈 아래 점이 보이고, 보이는 귀에는 링과 작은 귀걸이 두 개가 있다.
 - Eunoh 이미지 생성·수정 프롬프트에 이 특징과 좌우 기준을 명시하고, 결과에서 위치를 확인한다. 이전 작업 기록과 충돌하면 이 사용자 확정 규칙을 우선한다.
 - These are user-defined character identity facts, not inferred visual preferences; they persist across worlds.
 
 ## Channel image standard — explicit user rules
+- 참고 폴더 구성 (2026-10-17 사용자 정리): `runs/euno/reference/face/`에는 채널 화풍의 은오 얼굴 참고(정면 `direction1_front_v1.png`, 16:9 `front_16x9_v6.png`, 옆모습 `profile_left_v2.png`·`profile_right_v2.png`)를, `runs/euno/reference/mono/`에는 흑백 선화 참고(`eunoh_base2.jpg` 등)를 둔다. 은오를 그릴 때는 `face/front_16x9_v6.png`를 화풍·구도·얼굴 참고로 우선 첨부한다.
 - 사용자 확정 화풍 참고: `references/local/channel_style/channel_style_front_bust_20261013.png` (2026-10-13, “이 정면샷을 우리의 레퍼런스로 두자”). 원본은 `runs/euno/drafts/style_2026-10-13/direction1_front_v1.png`.
 - 사용자 확정 16:9 참고: `references/local/channel_style/channel_style_front_bust_16x9_20261013.png` (2026-10-13, “이 그림도 레퍼런스로 두자”, 1920x1080). 원본은 `runs/euno/drafts/style_2026-10-13/front_16x9_v6.png`. 영상용 구도·어깨·여백의 기준으로 쓴다.
 - 생성 편집을 여러 번 이어서 하면 노이즈가 쌓인다. 수정할 때는 원본에서 한 번만 생성하고, 바꾸지 않는 부분은 원본 픽셀을 다시 합성한다. 확대는 되도록 피한다.

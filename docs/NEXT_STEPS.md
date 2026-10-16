@@ -7,6 +7,11 @@
 시대와 세계를 자유롭게 여행하며, 도착한 세계의 소리를 우리 일상의 배경음악으로 담는다. 채널 소개 원문은 `README.md`에 기록했다. 주인공 Eunoh는 여러 시대와 세계에 등장한다.
 
 ## 현재 상태
+- [x] 재즈힙합 플레이리스트(261014) 이미지 제작: `runs/euno/drafts/2026-10-17_jazzhiphop/beanie_hoodie_front_v2.png` (Codex 내장 image_gen, 흰 비니에 파란 EUNOKIM 글자, 흰 후드티). 사용자가 영상용으로 선택.
+- [x] 261014 전체 영상 출력: `runs/playlist_261014/bg_tape_261014.mp4`, 1080p/24fps H.264, AAC 320k, 32분 10초, 9곡 1회 재생, 9개 챕터. 곡 순서는 `music/261014 jazz-hiphop/` 파일 이름 앞 숫자. 오버레이는 비니 글자 색(RGB 33, 85, 173) 계열 파랑, 위치는 사용자 검토로 오른쪽 여백 0·위 여백 16px. 렌더 스크립트 `runs/playlist_261014/render.py`.
+- [ ] 261014 전체 영상 최종 검토.
+- [x] 재즈 힙합 새 시안 `runs/euno/drafts/2026-10-17_jazzhiphop/beanie_hoodie_front_v2.png` 저장(1920×1080). 재정리된 얼굴 참고 3장과 비니 글자 참고로 내장 image_gen 1회 생성, 1672×941에서 Lanczos 1회 조정. 흰 비니·파란 부분 글자·흰 후디, 좌우 정체성 표식 확인. 비니 정수리는 위에서 잘려 둥근 밀착 형태의 완전한 확인은 불가. 원본·정확한 프롬프트·처리 기록 저장, 사용자 검토 대기. 이전 v1은 사용자가 삭제했으며 복원하지 않음.
+- [x] 재즈 힙합 비니·후디 정면 시안 `runs/euno/drafts/2026-10-17_jazzhiphop/beanie_hoodie_front_v1.png` 저장(1920×1080). 지정 참고 3장으로 내장 image_gen 1회, 1672×941에서 Lanczos 1회 조정. 세이지 그레이 비니·오트밀 후디. 화면 오른쪽 눈썹 구슬 2개·눈 아래 점 1개, 왼쪽 귀 링 1개·오른쪽 귀 링과 스터드 2개 확인. 비니 정수리가 위 가장자리에 닿아 머리 위 여백 조건 미충족. 원본·정확한 프롬프트·처리 기록 저장, 사용자 검토 대기.
 - [x] 은오 옆모습 기준 2장을 사용자가 지정(2026-10-13): 화면 왼쪽을 보는 `runs/euno/reference/eunoh_profile_facing_left_20261013.png`(원본 `drafts/2026-10-13_profile/profile_left_v2.png`, 눈썹 피어싱·눈 아래 점·링과 작은 귀걸이 2개), 화면 오른쪽을 보는 `runs/euno/reference/eunoh_profile_facing_right_20261013.png`(원본 `profile_right_v2.png`, 표시 없음·링 하나).
 - [x] 옆모습 시험작 `profile_left_v1.png`(내장 image_gen 1회, 1672×941에서 Lanczos 1회 확대)와 그 좌우 반전본 제작. 처음에는 보이는 쪽을 거꾸로 판단해서 left_v1에 표시를 빼고, right_v1에 표시를 잘못 넣었다. 수정본은 left_v2(left_v1에 표시만 국소 합성)와 right_v2(반전본 그대로). 방향 규칙은 `AGENTS.md`에 기록. left_v1에서 정수리 머리끝이 화면 위에서 살짝 잘린다.
 - [x] 원본 `direction1_front_v1.png`에서 1회 생성 후 원본을 86.1244% Lanczos 축소 합성한 `runs/euno/drafts/style_2026-10-13/front_16x9_v6.png` 제작 (1920×1080). v5는 어깨·구도 좌표만 참고. 얼굴·기존 머리카락·목·칼라 원본 복원, 화면 오른쪽 점·두 구슬 피어싱 확인. 원본에 없는 정수리 확장부와 26px 연결부는 생성 픽셀이므로 머리카락 전체 원본 보존 조건에는 예외가 있음. 프롬프트·처리 기록·재현 스크립트 저장, 사용자 검토 대기.
