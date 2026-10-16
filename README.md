@@ -3,16 +3,31 @@
 시대와 세계를 자유롭게 여행하며, 도착한 세계의 소리를 우리 일상의 배경음악으로 담는 플레이리스트 채널.
 음악은 Suno에서 제작한다. 주인공 Eunoh는 여러 시대와 세계에 등장하며, 각 장면은 새 요청부터 정한다.
 
-> We can go anywhere.
-> A neon alley that never sleeps, a sky full of airships, the small room of someone in the 1500s.
+채널 소개 (2026-10-17 갱신):
+
+> 음악으로도 정들 수 있지 않을까요?
 >
-> The sounds of the world we arrive in, as the background music of our day.
+> 우리는 어디로든 갈 수 있습니다.
+> 따뜻한 이불 속부터 잠들지 않는 네온 골목, 비행선이 날아다니는 하늘, 1500년대 아무개의 작은 방까지.
+>
+> 오늘 우리는 조금 더 가까워질 수 있을 거예요.
+>
+> -
+> 📼 테이프가 돌아갑니다.
+> 오늘은 어디에 머물러 볼까요?
+
+> Could music bring us closer, too?
+>
+> We can go anywhere.
+> From under a warm blanket to a neon alley that never sleeps, a sky full of airships, the small room of someone in the 1500s.
+>
+> Today, we might grow a little closer.
 >
 > -
 > 📼 The tape is rolling.
 > Where will we settle in today?
 
-주인공 이미지 모음은 `runs/eunoh/`에 둔다. `drafts/`에는 얼굴 등 시안, `reference/`에는 사용자가 선택한 인물 기준, `worlds/`에는 시대별 장면을 추가한다. 로컬 전용이며 도구가 자동으로 읽지는 않는다.
+주인공 이미지 모음은 `runs/euno/`에 둔다. `drafts/`에는 얼굴 등 시안, `reference/`에는 사용자가 선택한 인물 기준, `worlds/`에는 시대별 장면을 추가한다. 로컬 전용이며 도구가 자동으로 읽지는 않는다.
 
 ## 현재 가능한 것
 
@@ -34,7 +49,7 @@ Suno 음악 프롬프트는 GPT와 대화에서 직접 만든다. 한국어 상�
 
 기본 주소는 `http://127.0.0.1:8080/v1`이다. `GEMMA_BASE_URL`과 `GEMMA_MODEL` 환경 변수로 변경할 수 있다. 도구는 서버를 시작하거나 종료하지 않는다.
 
-- `config/style.json`: 현재 비어 있는 선택적 스타일 문맥.
+- `config/style.json`: Gemma에 전달하는 채널 화풍 기준 (`AGENTS.md`의 Channel image standard와 같다).
 - `references/catalog.json`: 현재 비어 있는 참조 설명 목록. 로컬 이미지 픽셀은 자동 전달하지 않는다.
 - `references/local/`: 로컬 참조 이미지 파일, Git 제외.
 - `runs/`: 실행별 요청·원본 응답·후보·프롬프트와 이미지 파일, Git 제외.
