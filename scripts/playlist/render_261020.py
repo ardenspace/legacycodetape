@@ -52,7 +52,7 @@ DARK = (30, 28, 28)  # tape window and bottom shell
 MID = (96, 90, 90)  # screws, tape holes
 STAR = (186, 166, 167)
 RIB = (60, 56, 56)  # faint knit ribs on the cassette body
-BAR_INK = (164, 136, 139)  # star colour, deepened so the meter reads on the white panel
+BAR_INK = INK
 
 # Cassette (design units inside the panel).
 CX, CY, CW, CH = 22, 22, 214, 136
