@@ -1,32 +1,46 @@
-"""Genre text thumbnail for the 261020 playlist: "UK / GARAGE" in the white space left of the beanie.
+"""Genre text thumbnail for the 261020 playlist: one line "UK GARAGE" in Bodoni Moda Bold,
+laid over the figure across the centre in the beanie star colour (user pick, variant "line / star").
 
-Run: uv run --with pillow --with numpy python scripts/playlist/thumbnail_261020.py <image> <out.png>
-Only near-white background pixels take the text colour, so the figure always stays in front.
+Run: uv run --with pillow --with numpy python scripts/playlist/thumbnail_261020.py <image> <out_dir> references/local/fonts/BodoniModa_72pt-Bold.ttf
+Writes four variants (stack|line x invert|star); the thumbnail uses over_line_star.png.
+The font file lives in references/local/fonts/ (OFL, not tracked by Git).
 """
 import sys
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
-src, out = sys.argv[1], sys.argv[2]
+from PIL import Image, ImageDraw, ImageFont
+src, out_dir, font_path = sys.argv[1:4]
 img = Image.open(src).convert("RGB")
-a = np.asarray(img).astype(np.float32)
-white = (a.min(axis=2) > 236).astype(np.uint8) * 255
-bg = np.asarray(Image.fromarray(white, "L").filter(ImageFilter.MinFilter(5)).filter(ImageFilter.GaussianBlur(1))).astype(np.float32) / 255
-path = "/System/Library/Fonts/Supplemental/Arial Black.ttf"
-layer = Image.new("L", img.size, 0)
-d = ImageDraw.Draw(layer)
-x0, target = 56, 556  # GARAGE ends just before the beanie edge
-size = 100
-while ImageFont.truetype(path, size + 2).getlength("GARAGE") < target - x0:
-    size += 2
-fg = ImageFont.truetype(path, size)
-fu = ImageFont.truetype(path, int(size * 2.1))
-bu = d.textbbox((0, 0), "UK", font=fu); bgx = d.textbbox((0, 0), "GARAGE", font=fg)
-y_uk = 110
-d.text((x0 - bu[0], y_uk - bu[1]), "UK", font=fu, fill=255)
-y_g = y_uk + (bu[3] - bu[1]) + 22
-d.text((x0 - bgx[0], y_g - bgx[1]), "GARAGE", font=fg, fill=255)
-m = Image.fromarray((np.asarray(layer).astype(np.float32) * bg).astype(np.uint8), "L")
-res = img.copy()
-res.paste(Image.new("RGB", img.size, (50, 46, 46)), (0, 0), m)
-res.save(out)
-print(size)
+W, H = img.size
+base = np.asarray(img).astype(np.float32)
+lum = (base @ np.array([0.299, 0.587, 0.114], np.float32))
+CHAR, CREAM, STAR = np.array((50, 46, 46), np.float32), np.array((247, 243, 239), np.float32), np.array((186, 166, 167), np.float32)
+
+def fit(word, width):
+    size = 60
+    while ImageFont.truetype(font_path, size + 4).getlength(word) < width:
+        size += 4
+    return ImageFont.truetype(font_path, size)
+
+def mask(lines):
+    layer = Image.new("L", img.size, 0)
+    d = ImageDraw.Draw(layer)
+    for word, f, cy in lines:
+        b = d.textbbox((0, 0), word, font=f)
+        d.text(((W - (b[2] - b[0])) / 2 - b[0], cy - (b[3] + b[1]) / 2), word, font=f, fill=255)
+    return np.asarray(layer).astype(np.float32)[..., None] / 255
+
+layouts = {
+    # Two lines: UK on the beanie, GARAGE across the lower face and collar; the eyes stay clear.
+    "stack": lambda: [("UK", fit("UK", 640), 215), ("GARAGE", fit("GARAGE", 1760), 790)],
+    # One line straight through the centre.
+    "line": lambda: [("UK GARAGE", fit("UK GARAGE", 1800), 560)],
+}
+for lname, lay in layouts.items():
+    m = mask(lay())
+    # Invert: charcoal over light areas, cream over the dark beanie / hair / sweater.
+    t = np.clip((lum - 90) / 60, 0, 1)[..., None]
+    col = CREAM * (1 - t) + CHAR * t
+    for cname, c in (("invert", col), ("star", STAR)):
+        res = base * (1 - m) + c * m
+        Image.fromarray(res.round().astype(np.uint8)).save(f"{out_dir}/over_{lname}_{cname}.png")
+        print(lname, cname)
