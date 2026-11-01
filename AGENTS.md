@@ -41,6 +41,12 @@ A playlist channel that travels across eras and imagined worlds, bringing the so
 4. 처음부터 16:9로 생성하고, 최종 파일은 정확히 1920x1080으로 맞춘다. 확대와 편집 반복은 최소화한다.
 5. `runs/euno/drafts/` 아래 날짜 폴더에 덮어쓰지 않고 저장하고, 같은 이름의 `_prompt.txt`(정확한 프롬프트)와 처리 기록을 함께 남긴다. 보고한 뒤 멈추고 사용자의 선택을 기다린다.
 
+## Book playlist series — explicit user rules (2026-11-01)
+- 사용자가 읽는 책 한 권을 감정의 흐름에 따라 여러 플레이리스트로 나눈다 (예: 서문, 초반, 중반, 괴물의 이야기, 괴물의 감정). 한 책의 플레이리스트는 유튜브 재생 목록 하나로 묶는다.
+- 책의 문장은 영상·이미지에 넣지 않는다. 책 제목과 작가 이름만 쓴다.
+- 이미지 스타일은 책마다 새로 정한다. 위 채널 이미지 기준(흰 배경·선화·정면 어깨 구도)과 `config/style.json`은 책 시리즈에 적용하지 않는다. 은오도 사용자가 요청할 때만 등장한다.
+- 『프랑켄슈타인』(Mary Shelley): 까만 배경에 괴물의 형체가 흐릿하게 보이는 이미지. 글리치는 이미지에 굽지 않고 영상 단계에서 얹는다. 이 스타일은 이 책에만 쓴다.
+
 ## Planning and handoff
 - Read `docs/NEXT_STEPS.md` before continuing. It records completion status, proposed phases, acceptance criteria and unresolved decisions.
 - Update its checkboxes as work is actually completed; do not treat proposed defaults as user-approved requirements.
