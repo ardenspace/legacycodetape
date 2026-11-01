@@ -116,6 +116,32 @@ def vertical_streaks(a, strength):
     return (255 - (255 - base) * (255 - acc * k) / 255).clip(0, 255).astype(np.uint8)
 
 
+def eye_band(a, rng, box, strength):
+    """Cover the eye hollows with torn strips of the forehead light, dragged sideways and smeared.
+
+    box = (x0, y0, x1, y1): the eye area; strips are taken from the rows just above it.
+    """
+    x0, y0, x1, y1 = box
+    out = a.astype(np.float32)
+    h = y1 - y0
+    src_rows = np.arange(max(0, y0 - 2 * h), y0)
+    y = y0
+    while y < y1:
+        band = int(rng.integers(2, 7))
+        src = int(rng.choice(src_rows))
+        dx = int(rng.normal(0, 30) * strength)
+        strip = np.roll(a[src:src + band], dx, axis=1).astype(np.float32)
+        # Smear the strip to the right so it reads as a light trail, not a pasted copy.
+        trail = strip.copy()
+        for x in range(x0 - 40, min(a.shape[1], x1 + 160)):
+            trail[:, x] = np.maximum(strip[:, x], trail[:, x - 1] * 0.985)
+        mix = rng.uniform(0.55, 0.9) * min(1.0, strength)
+        sl = out[y:y + band, x0 - 60:x1 + 160]
+        sl[:] = sl * (1 - mix) + trail[:sl.shape[0], x0 - 60:x1 + 160] * mix
+        y += band + int(rng.integers(0, 3))
+    return out.clip(0, 255).astype(np.uint8)
+
+
 def rgb_split(a, shift, saturation):
     """Offset red/blue channels, then pull colour back toward grey so the fringe stays muted."""
     out = a.copy()
@@ -126,15 +152,19 @@ def rgb_split(a, shift, saturation):
     return (grey + (f - grey) * saturation).clip(0, 255).astype(np.uint8)
 
 
+def grain_field(rng, h, w, amount):
+    """Softened monochrome grain centred on 0, as float32 (h, w)."""
+    grain = rng.normal(0, amount, (h, w)).astype(np.float32)
+    return np.asarray(Image.fromarray((grain + 128).clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), dtype=np.float32) - 128
+
+
 def film_noise(a, rng, amount, lift=6):
     """Monochrome grain over the whole frame, blacks lifted a little so the grain shows on black."""
-    h, w, _ = a.shape
-    grain = rng.normal(0, amount, (h, w)).astype(np.float32)
-    grain = np.asarray(Image.fromarray((grain + 128).clip(0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), dtype=np.float32) - 128
+    grain = grain_field(rng, a.shape[0], a.shape[1], amount)
     return (a.astype(np.float32) + lift + grain[..., None]).clip(0, 255).astype(np.uint8)
 
 
-def glitch(img, seed=0, strength=1.0, saturation=0.45, gamma=1.0, coverage=1.0, blocks=5, noise=0.0):
+def glitch(img, seed=0, strength=1.0, saturation=0.45, gamma=1.0, coverage=1.0, blocks=5, noise=0.0, eyes=None):
     rng = np.random.default_rng(seed)
     a = np.asarray(img.convert("RGB"))
     top, bottom = figure_rows(a)
@@ -145,6 +175,9 @@ def glitch(img, seed=0, strength=1.0, saturation=0.45, gamma=1.0, coverage=1.0, 
     a = twist(a, rng, top, bottom, strength, coverage)
     a = smear(a, rng, top, bottom, strength, coverage)
     a = pixel_blocks(a, rng, top, bottom, strength, blocks)
+    if eyes:
+        # Own generator so the rest of the glitch and the grain stay as chosen.
+        a = eye_band(a, np.random.default_rng(seed + 7), eyes, max(strength, 0.6))
     a = rgb_split(a, int(round(9 * strength)), saturation)
     if gamma != 1.0:
         # Darken after the glitch so the light trails keep their shape; gamma keeps highlights.
